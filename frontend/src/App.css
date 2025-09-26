@@ -1,3 +1,73 @@
+/* Expense Form Styling */
+.expense-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  background: #f6f8fa;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(100,108,255,0.07);
+  margin-bottom: 2rem;
+}
+.expense-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #646cff;
+}
+.expense-form input,
+.expense-form select {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+.expense-form button {
+  background: #646cff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1.2rem;
+  transition: background 0.2s;
+}
+.expense-form button:hover {
+  background: #4b54c6;
+}
+
+.expense-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.expense-item {
+  background: #f9f9fb;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: box-shadow 0.2s;
+}
+.expense-item:hover {
+  box-shadow: 0 4px 16px rgba(100,108,255,0.15);
+}
+.expense-item strong {
+  color: #646cff;
+}
+.expense-item .amount {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2d7d46;
+}
 #root {
   max-width: 1280px;
   margin: 0 auto;

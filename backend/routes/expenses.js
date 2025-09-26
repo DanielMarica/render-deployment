@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const expensesService = require('../services/expenses.js');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const expenses = expensesService.getAllExpenses();
+    const expenses = await expensesService.getAllExpenses();
+    console.log("expenses ", expenses)
     res.json(expenses);
   } catch (error) {
     console.error('Error retrieving expenses:', error);

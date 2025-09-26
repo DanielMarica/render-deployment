@@ -26,5 +26,26 @@
     "description": "Random Expense 1758264866647",
     "payer": "Bob",
     "amount": 80.94
+  },
+  {
+    "id": "1758875147267",
+    "date": "2025-09-26T08:25:47.239Z",
+    "description": "Random Expense 1758875147239",
+    "payer": "Alice",
+    "amount": 96.58
+  },
+  {
+    "id": "1758875149443",
+    "date": "2025-09-26T08:25:49.423Z",
+    "description": "Random Expense 1758875149423",
+    "payer": "Bob",
+    "amount": 79.97
+  },
+  {
+    "id": "1758875149908",
+    "date": "2025-09-26T08:25:49.889Z",
+    "description": "Random Expense 1758875149889",
+    "payer": "Bob",
+    "amount": 28.62
   }
 ]

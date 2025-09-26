@@ -34,23 +34,20 @@ export default function Home() {
     try {
       setLoading(true);
       const data = await sendApiRequestandHandleError('GET', 'expenses');
-      setExpenses(data);
+      setExpenses(Array.isArray(data) ? data : []);
       setError(null);
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   useEffect(() => {
     fetchExpenses();
   }, []);
 
   const handleAddExpense = async (newExpense: Expense) => {
-    const newExpensesOptimistic = [newExpense, ...expenses]; // Optimistically update the state, whatever the sort method, add on top
-    setExpenses(newExpensesOptimistic);
-    const addedExpense = await sendApiRequestandHandleError('POST', 'expenses', newExpense);
-    const newExpensesActual = [addedExpense, ...expenses]; // Now that we have the actual added expense with id from backend, let's use it instead of the optimistically added one
-    setExpenses(newExpensesActual);
+    await sendApiRequestandHandleError('POST', 'expenses', newExpense);
+    await fetchExpenses(); // Refresh the list after adding
   };
 
   const handleResetData = async () => {
@@ -87,11 +84,16 @@ export default function Home() {
 
       {expenses.length > 0 && <ExpenseSorter setSortingAlgo={handleAlgoChange} />}
 
-      <div>
+      <div className="expense-list">
         {sortedExpenses.length === 0 ? (
           <p>No expenses found.</p>
         ) : (
-          sortedExpenses.map((expense) => <ExpenseItem key={expense.id} expense={expense} />)
+          sortedExpenses.map((expense, idx) => (
+            <ExpenseItem
+              key={expense.id ?? `expense-${idx}`}
+              expense={expense}
+            />
+          ))
         )}
       </div>
     </div>
