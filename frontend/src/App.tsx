@@ -1,21 +1,14 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
+import Layout from './pages/Layout.tsx';
 import Welcome from './pages/Home/Welcome.tsx';
 import List from './pages/Home/List.tsx';
 import Add from './pages/Home/Add.tsx';
 import type { Expense, ExpenseInput } from './types/Expense.ts';
 
-export const PageContext = createContext<{
-  currentPage: string;
-  setCurrentPage: (page: string) => void;
-}>({
-  currentPage: 'Welcome',
-  setCurrentPage: () => {},
-});
-
 function App() {
   const host = import.meta.env.VITE_API_URL || 'http://unknown-api-url.com';
-  const [currentPage, setCurrentPage] = useState<string>('Welcome');
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -68,32 +61,35 @@ function App() {
     setLoading(false);
   };
 
-  function handlePageChange(page: string) {
-    window.history.pushState(null, page, `/${page.toLowerCase()}`);
-    setCurrentPage(page);
-  }
+  // Create browser router with layout and nested routes
+  const router = createBrowserRouter([
+    {
+      element: <Layout />,
+      children: [
+        {
+          index: true,
+          element: <Welcome />
+        },
+        {
+          path: '/list',
+          element: (
+            <List 
+              expenses={expenses}
+              loading={loading}
+              error={error}
+              handleResetData={handleResetData}
+            />
+          )
+        },
+        {
+          path: '/add',
+          element: <Add handleAddExpense={handleAddExpense} />
+        }
+      ]
+    }
+  ]);
 
-  // Create pages object mapping page names to components
-  const pages: { [key: string]: React.FunctionComponent } = {
-    Welcome: () => <Welcome />,
-    List: () => (
-      <List 
-        expenses={expenses}
-        loading={loading}
-        error={error}
-        handleResetData={handleResetData}
-      />
-    ),
-    Add: () => <Add handleAddExpense={handleAddExpense} />,
-  };
-
-  const CurrentPageComponent = pages[currentPage] || pages['Welcome'];
-
-  return (
-    <PageContext.Provider value={{ currentPage, setCurrentPage: handlePageChange }}>
-      <CurrentPageComponent />
-    </PageContext.Provider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -1,5 +1,4 @@
-import { useState, useContext } from 'react';
-import { PageContext } from '../../App.tsx';
+import { useState } from 'react';
 import ExpenseItem from '../../components/ExpenseItem.tsx';
 import ExpenseSorter from '../../components/ExpenseSorter.tsx';
 import type { Expense } from '../../types/Expense.ts';
@@ -12,7 +11,6 @@ interface ListProps {
 }
 
 export default function List({ expenses, loading, error, handleResetData }: ListProps) {
-  const { setCurrentPage } = useContext(PageContext);
   const [sortingAlgo, setSortingAlgo] = useState<(a: Expense, b: Expense) => number>(() => () => 0);
 
   const handleAlgoChange = (algo: (a: Expense, b: Expense) => number) => {
@@ -32,9 +30,7 @@ export default function List({ expenses, loading, error, handleResetData }: List
       {error && <div style={{ color: 'red' }}>Error: {error}</div>}
 
       <div style={{ marginBottom: '1rem' }}>
-        <button onClick={() => setCurrentPage('Welcome')}>Back to Welcome</button>
-        <button onClick={() => setCurrentPage('Add')} style={{ marginLeft: '1rem' }}>Add New Expense</button>
-        <button onClick={handleResetData} style={{ marginLeft: '1rem' }}>Reset Data</button>
+        <button onClick={handleResetData}>Reset Data</button>
       </div>
 
       <h2>Expenses ({expenses.length})</h2>

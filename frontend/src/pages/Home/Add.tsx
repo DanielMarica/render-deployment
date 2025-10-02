@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import { PageContext } from '../../App.tsx';
+import { useNavigate } from 'react-router-dom';
 import ExpenseAdd from '../../components/ExpenseAdd.tsx';
 import type { ExpenseInput } from '../../types/Expense.ts';
 
@@ -8,10 +7,11 @@ interface AddProps {
 }
 
 export default function Add({ handleAddExpense }: AddProps) {
-  const { setCurrentPage } = useContext(PageContext);
+  const navigate = useNavigate();
+  
   const onAddExpense = async (expense: ExpenseInput) => {
     await handleAddExpense(expense);
-    setCurrentPage('List'); // Navigate to List after adding
+    navigate('/list'); // Navigate to List after adding
   };
 
   return (
@@ -19,11 +19,6 @@ export default function Add({ handleAddExpense }: AddProps) {
       <h1>Add New Expense</h1>
       
       <ExpenseAdd addExpense={onAddExpense} />
-      
-      <div style={{ marginTop: '2rem' }}>
-        <button onClick={() => setCurrentPage('Welcome')}>Back to Welcome</button>
-        <button onClick={() => setCurrentPage('List')} style={{ marginLeft: '1rem' }}>View Expenses</button>
-      </div>
     </div>
   );
 }
