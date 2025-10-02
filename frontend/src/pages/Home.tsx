@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ExpenseItem from '../components/ExpenseItem.tsx';
 import ExpenseAdd from '../components/ExpenseAdd.tsx';
 import ExpenseSorter from '../components/ExpenseSorter.tsx';
-import type { Expense } from '../types/Expense.ts';
+import type { Expense, ExpenseInput } from '../types/Expense.ts';
 
 export default function Home() {
   const host = import.meta.env.VITE_API_URL || 'http://unknown-api-url.com';
@@ -11,7 +11,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const sendApiRequestandHandleError = async (method: string = 'GET', path: string, body?: Expense) => {
+  const sendApiRequestandHandleError = async (method: string = 'GET', path: string, body?: ExpenseInput) => {
     try {
       const response = await fetch(`${host}/api/${path}`, {
         method: method,
@@ -45,7 +45,7 @@ export default function Home() {
     fetchExpenses();
   }, []);
 
-  const handleAddExpense = async (newExpense: Expense) => {
+  const handleAddExpense = async (newExpense: ExpenseInput) => {
     await sendApiRequestandHandleError('POST', 'expenses', newExpense);
     await fetchExpenses(); // Refresh the list after adding
   };

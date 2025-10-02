@@ -1,54 +1,86 @@
-
-import { useState } from 'react';
-import type { Expense } from '../types/Expense.ts';
+import { useForm } from 'react-hook-form';
+import type { ExpenseInput } from '../types/Expense.ts';
 
 interface ExpenseAddProps {
-  addExpense: (expense: Expense) => void;
+  addExpense: (expense: ExpenseInput) => void;
+}
+
+// Type for the form data
+interface FormData {
+  payer: string;
+  date: string;
+  description: string;
+  amount: number;
 }
 
 export default function ExpenseAdd({ addExpense }: ExpenseAddProps) {
-  const [payer, setPayer] = useState('Alice');
-  const [date, setDate] = useState('');
-  const [description, setDescription] = useState('');
-  const [amount, setAmount] = useState('');
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      payer: 'Alice',
+      date: '',
+      description: '',
+      amount: 0,
+    },
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const expense = {
-      date,
-      description,
-      payer,
-      amount: parseFloat(amount),
-    };
-    addExpense(expense);
-    setDate('');
-    setDescription('');
-    setAmount('');
-    setPayer('Alice');
+  const onSubmit = (data: FormData) => {
+    addExpense(data);
+    reset(); // Reset form after submission
   };
 
   return (
-    <form onSubmit={handleSubmit} className="expense-form">
+    <form onSubmit={handleSubmit(onSubmit)} className="expense-form">
       <label>
         Payer:
-        <select value={payer} onChange={e => setPayer(e.target.value)}>
+        <select {...register('payer', { required: 'Payer is required' })}>
           <option value="Alice">Alice</option>
           <option value="Bob">Bob</option>
         </select>
+        {errors.payer && <span className="error">{errors.payer.message}</span>}
       </label>
-      <label style={{ marginLeft: '1rem' }}>
+      
+      <label>
         Date:
-        <input type="date" value={date} onChange={e => setDate(e.target.value)} required />
+        <input 
+          type="date" 
+          {...register('date', { required: 'Date is required' })} 
+        />
+        {errors.date && <span className="error">{errors.date.message}</span>}
       </label>
-      <label style={{ marginLeft: '1rem' }}>
+      
+      <label>
         Description:
-        <input type="text" value={description} onChange={e => setDescription(e.target.value)} required />
+        <input 
+          type="text" 
+          {...register('description', { 
+            required: 'Description is required',
+            minLength: { value: 3, message: 'Description must be at least 3 characters' }
+          })} 
+          placeholder="Enter description"
+        />
+        {errors.description && <span className="error">{errors.description.message}</span>}
       </label>
-      <label style={{ marginLeft: '1rem' }}>
+      
+      <label>
         Amount:
-        <input type="number" step="0.01" value={amount} onChange={e => setAmount(e.target.value)} required />
+        <input 
+          type="number" 
+          step="0.01" 
+          {...register('amount', { 
+            required: 'Amount is required',
+            min: { value: 0.01, message: 'Amount must be greater than 0' }
+          })} 
+          placeholder="Enter amount"
+        />
+        {errors.amount && <span className="error">{errors.amount.message}</span>}
       </label>
-      <button type="submit" style={{ marginLeft: '1rem' }}>Add Expense</button>
+      
+      <button type="submit">Add Expense</button>
     </form>
   );
 }

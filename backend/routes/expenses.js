@@ -13,17 +13,16 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newExpense = {
-      id: Date.now().toString(),
       date: req.body.date,
       description: req.body.description,
       payer: req.body.payer,
       amount: parseFloat(req.body.amount),
     };
 
-    const addedExpense = expensesService.addExpense(newExpense);
+    const addedExpense = await expensesService.addExpense(newExpense);
     res.status(201).json(addedExpense);
   } catch (error) {
     console.error('Error adding expense:', error);

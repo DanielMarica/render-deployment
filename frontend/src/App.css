@@ -38,6 +38,12 @@
 .expense-form button:hover {
   background: #4b54c6;
 }
+.expense-form .error {
+  color: #d32f2f;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-weight: normal;
+}
 
 .expense-list {
   display: flex;
