@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Lottie from 'lottie-react';
 import ExpenseItem from '../../components/ExpenseItem.tsx';
 import ExpenseSorter from '../../components/ExpenseSorter.tsx';
 import type { Expense } from '../../types/Expense.ts';
+import onlinePayAnimation from '../../assets/onlinePay.json';
 
 interface ListProps {
   expenses: Expense[];
@@ -12,6 +14,22 @@ interface ListProps {
 
 export default function List({ expenses, loading, error, handleResetData }: ListProps) {
   const [sortingAlgo, setSortingAlgo] = useState<(a: Expense, b: Expense) => number>(() => () => 0);
+  const [showLoading, setShowLoading] = useState(true);
+  const [minLoadingTime, setMinLoadingTime] = useState(true);
+
+  // Minimum 5 seconds loading time to see animation
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMinLoadingTime(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Show loading if either API is loading OR minimum time hasn't passed
+  useEffect(() => {
+    setShowLoading(loading || minLoadingTime);
+  }, [loading, minLoadingTime]);
 
   const handleAlgoChange = (algo: (a: Expense, b: Expense) => number) => {
     setSortingAlgo(() => algo);
@@ -19,8 +37,25 @@ export default function List({ expenses, loading, error, handleResetData }: List
 
   const sortedExpenses = [...expenses].sort(sortingAlgo);
 
-  if (loading) {
-    return <div>Loading expenses...</div>;
+  if (showLoading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        minHeight: '60vh' 
+      }}>
+        <Lottie 
+          animationData={onlinePayAnimation} 
+          loop={true}
+          style={{ width: 300, height: 300 }}
+        />
+        <p style={{ marginTop: '1rem', fontSize: '1.2rem', color: '#7c3aed' }}>
+          Loading expenses...
+        </p>
+      </div>
+    );
   }
 
   return (
