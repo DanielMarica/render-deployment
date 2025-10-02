@@ -1,17 +1,31 @@
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import type { ExpenseInput } from '../types/Expense.ts';
 
 interface ExpenseAddProps {
   addExpense: (expense: ExpenseInput) => void;
 }
 
-// Type for the form data
-interface FormData {
-  payer: string;
-  date: string;
-  description: string;
-  amount: number;
-}
+// Zod schema with all validation rules
+const expenseSchema = z.object({
+  payer: z.enum(['Alice', 'Bob'], { 
+    message: 'Payer must be either Alice or Bob' 
+  }),
+  date: z.string().min(1, 'Date is required'),
+  description: z.string()
+    .max(200, 'Description cannot be longer than 200 characters')
+    .optional()
+    .or(z.literal('')),
+  amount: z.number({ 
+    message: 'Amount must be a valid number'
+  })
+    .positive('Amount must be a positive number')
+    .min(0.01, 'Amount must be at least 0.01')
+});
+
+// Infer TypeScript type from Zod schema
+type FormData = z.infer<typeof expenseSchema>;
 
 export default function ExpenseAdd({ addExpense }: ExpenseAddProps) {
   const {
@@ -20,16 +34,16 @@ export default function ExpenseAdd({ addExpense }: ExpenseAddProps) {
     reset,
     formState: { errors },
   } = useForm<FormData>({
+    resolver: zodResolver(expenseSchema),
     defaultValues: {
-      payer: 'Alice',
+      payer: 'Alice' as 'Alice' | 'Bob',
       date: '',
       description: '',
-      amount: 0,
     },
   });
 
   const onSubmit = (data: FormData) => {
-    addExpense(data);
+    addExpense(data as ExpenseInput);
     reset(); // Reset form after submission
   };
 
@@ -37,7 +51,7 @@ export default function ExpenseAdd({ addExpense }: ExpenseAddProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="expense-form">
       <label>
         Payer:
-        <select {...register('payer', { required: 'Payer is required' })}>
+        <select {...register('payer')}>
           <option value="Alice">Alice</option>
           <option value="Bob">Bob</option>
         </select>
@@ -48,20 +62,17 @@ export default function ExpenseAdd({ addExpense }: ExpenseAddProps) {
         Date:
         <input 
           type="date" 
-          {...register('date', { required: 'Date is required' })} 
+          {...register('date')} 
         />
         {errors.date && <span className="error">{errors.date.message}</span>}
       </label>
       
       <label>
-        Description:
+        Description (optional):
         <input 
           type="text" 
-          {...register('description', { 
-            required: 'Description is required',
-            minLength: { value: 3, message: 'Description must be at least 3 characters' }
-          })} 
-          placeholder="Enter description"
+          {...register('description')} 
+          placeholder="Enter description (max 200 characters)"
         />
         {errors.description && <span className="error">{errors.description.message}</span>}
       </label>
@@ -71,10 +82,7 @@ export default function ExpenseAdd({ addExpense }: ExpenseAddProps) {
         <input 
           type="number" 
           step="0.01" 
-          {...register('amount', { 
-            required: 'Amount is required',
-            min: { value: 0.01, message: 'Amount must be greater than 0' }
-          })} 
+          {...register('amount', { valueAsNumber: true })} 
           placeholder="Enter amount"
         />
         {errors.amount && <span className="error">{errors.amount.message}</span>}
