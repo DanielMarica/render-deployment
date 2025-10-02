@@ -5,7 +5,9 @@ export default function Layout() {
   return (
     <div>
       <NavBar />
-      <Outlet />
+      <div style={{ paddingTop: '5rem', minHeight: '100vh' }}>
+        <Outlet />
+      </div>
     </div>
   );
 }
