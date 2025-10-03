@@ -64,8 +64,13 @@ export default function List({ expenses, loading, error, handleResetData }: List
 
       {error && <div style={{ color: 'red' }}>Error: {error}</div>}
 
-      <div style={{ marginBottom: '1rem' }}>
-        <button onClick={handleResetData}>Reset Data</button>
+      <div className="mb-4">
+        <button 
+          onClick={handleResetData}
+          className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 border-2 border-red-800"
+        >
+          Reset Data
+        </button>
       </div>
 
       <h2>Expenses ({expenses.length})</h2>
