@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+:root {
+  /* Vos deux couleurs personnalisées */
+  --coral: #F97C7C;
+  --cream: #FFFCE2;
+  
+  /* Variables Tailwind personnalisées avec vos couleurs */
+  --primary: var(--coral);
+  --secondary: var(--cream);
+  --background: var(--cream);
+  --foreground: #000000;
+  --muted: var(--cream);
+  --muted-foreground: #666666;
+  --popover: var(--cream);
+  --popover-foreground: #000000;
+  --card: var(--cream);
+  --card-foreground: #000000;
+  --border: var(--coral);
+  --input: var(--cream);
+  --accent: var(--coral);
+  --accent-foreground: var(--cream);
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --ring: var(--coral);
+}

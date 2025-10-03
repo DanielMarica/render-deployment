@@ -77,7 +77,7 @@ export default function List({ expenses, loading, error, handleResetData }: List
 
       {expenses.length > 0 && <ExpenseSorter setSortingAlgo={handleAlgoChange} />}
 
-      <div className="expense-list">
+      <div className="flex flex-col gap-6 my-8 mx-auto max-w-2xl">
         {sortedExpenses.length === 0 ? (
           <p>No expenses found.</p>
         ) : (

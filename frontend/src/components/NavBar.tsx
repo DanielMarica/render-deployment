@@ -13,7 +13,7 @@ export default function NavBar() {
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 w-full bg-violet-600 z-50 shadow-lg">
+    <nav className="fixed top-0 left-0 right-0 w-full z-50 shadow-lg" style={{ backgroundColor: '#F97C7C' }}>
       <div className="flex items-center justify-center p-6">
         <NavigationMenu>
           <NavigationMenuList className="gap-8">
@@ -22,9 +22,10 @@ export default function NavBar() {
                 <NavLink
                   to="/"
                   className={cn(
-                    "text-white text-lg transition-opacity hover:opacity-80 no-underline",
+                    "text-lg transition-opacity hover:opacity-80 no-underline",
                     location.pathname === '/' ? 'font-bold' : 'font-normal'
                   )}
+                  style={{ color: '#FFFCE2' }}
                 >
                   Home
                 </NavLink>
@@ -36,9 +37,10 @@ export default function NavBar() {
                 <NavLink
                   to="/list"
                   className={cn(
-                    "text-white text-lg transition-opacity hover:opacity-80 no-underline",
+                    "text-lg transition-opacity hover:opacity-80 no-underline",
                     location.pathname === '/list' ? 'font-bold' : 'font-normal'
                   )}
+                  style={{ color: '#FFFCE2' }}
                 >
                   List
                 </NavLink>
@@ -50,9 +52,10 @@ export default function NavBar() {
                 <NavLink
                   to="/add"
                   className={cn(
-                    "text-white text-lg transition-opacity hover:opacity-80 no-underline",
+                    "text-lg transition-opacity hover:opacity-80 no-underline",
                     location.pathname === '/add' ? 'font-bold' : 'font-normal'
                   )}
+                  style={{ color: '#FFFCE2' }}
                 >
                   Add
                 </NavLink>
@@ -60,7 +63,10 @@ export default function NavBar() {
             </NavigationMenuItem>
             
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="text-white text-lg transition-opacity hover:opacity-80 bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent">
+              <NavigationMenuTrigger 
+                className="text-lg transition-opacity hover:opacity-80 bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent"
+                style={{ color: '#FFFCE2' }}
+              >
                 Shad
               </NavigationMenuTrigger>
               <NavigationMenuContent>
