@@ -1,0 +1,51 @@
+[
+  {
+    id: 1,
+    date: 2025-01-16T00:00:00.000Z,
+    description: 'Example expense #1 from Alice',
+    payer: 'Alice',
+    amount: 25.5
+  },
+  {
+    id: 2,
+    date: 2025-01-15T00:00:00.000Z,
+    description: 'Example expense #2 from Bob',
+    payer: 'Bob',
+    amount: 35
+  },
+  {
+    id: 3,
+    date: 2025-01-15T00:00:00.000Z,
+    description: 'Example expense #3 from Alice',
+    payer: 'Alice',
+    amount: 2
+  },
+  {
+    id: 4,
+    date: 2025-09-19T06:54:26.647Z,
+    description: 'Random Expense 1758264866647',
+    payer: 'Bob',
+    amount: 80.94
+  },
+  {
+    id: 5,
+    date: 2025-09-26T08:25:47.239Z,
+    description: 'Random Expense 1758875147239',
+    payer: 'Alice',
+    amount: 96.58
+  },
+  {
+    id: 6,
+    date: 2025-09-26T08:25:49.423Z,
+    description: 'Random Expense 1758875149423',
+    payer: 'Bob',
+    amount: 79.97
+  },
+  {
+    id: 7,
+    date: 2025-09-26T08:25:49.889Z,
+    description: 'Random Expense 1758875149889',
+    payer: 'Bob',
+    amount: 28.62
+  }
+]
