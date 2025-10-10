@@ -5,6 +5,11 @@ import Layout from './pages/Layout.tsx';
 import Welcome from './pages/Home/Welcome.tsx';
 import List from './pages/Home/List.tsx';
 import Add from './pages/Home/Add.tsx';
+import Shad from './pages/Home/Shad.tsx';
+import ShadMenu from './pages/Home/ShadMenu.tsx';
+import ShadTable from './pages/Home/ShadTable.tsx';
+import ShadInput from './pages/Home/ShadSooner.tsx';
+import ShadFile from './pages/Home/ShadS.tsx';
 import type { Expense, ExpenseInput } from './types/Expense.ts';
 
 function App() {
@@ -84,6 +89,26 @@ function App() {
         {
           path: '/add',
           element: <Add handleAddExpense={handleAddExpense} />
+        },
+        {
+          path: '/shad',
+          element: <Shad />
+        },
+        {
+          path: '/shad/menu',
+          element: <ShadMenu />
+        },
+        {
+          path: '/shad/table',
+          element: <ShadTable />
+        },
+        {
+          path: '/shad/input',
+          element: <ShadInput />
+        },
+        {
+          path: '/shad/file',
+          element: <ShadFile />
         }
       ]
     }

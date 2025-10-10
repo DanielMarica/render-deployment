@@ -48,47 +48,58 @@ export default function ExpenseAdd({ addExpense }: ExpenseAddProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="expense-form">
-      <label>
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap gap-4 items-center bg-secondary p-6 rounded-lg shadow-md border border-primary mb-8">
+      <label className="flex flex-col font-medium text-foreground">
         Payer:
-        <select {...register('payer')}>
+        <select 
+          {...register('payer')}
+          className="mt-2 p-2 rounded-md border border-primary bg-secondary text-base focus:outline-none focus:ring-2 focus:ring-primary"
+        >
           <option value="Alice">Alice</option>
           <option value="Bob">Bob</option>
         </select>
-        {errors.payer && <span className="error">{errors.payer.message}</span>}
+        {errors.payer && <span className="text-destructive text-sm mt-1 font-normal">{errors.payer.message}</span>}
       </label>
       
-      <label>
+      <label className="flex flex-col font-medium text-foreground">
         Date:
         <input 
           type="date" 
-          {...register('date')} 
+          {...register('date')}
+          className="mt-2 p-2 rounded-md border border-primary bg-secondary text-base focus:outline-none focus:ring-2 focus:ring-primary"
         />
-        {errors.date && <span className="error">{errors.date.message}</span>}
+        {errors.date && <span className="text-destructive text-sm mt-1 font-normal">{errors.date.message}</span>}
       </label>
       
-      <label>
+      <label className="flex flex-col font-medium text-foreground">
         Description (optional):
         <input 
           type="text" 
           {...register('description')} 
           placeholder="Enter description (max 200 characters)"
+          className="mt-2 p-2 rounded-md border border-primary bg-secondary text-base focus:outline-none focus:ring-2 focus:ring-primary"
         />
-        {errors.description && <span className="error">{errors.description.message}</span>}
+        {errors.description && <span className="text-destructive text-sm mt-1 font-normal">{errors.description.message}</span>}
       </label>
       
-      <label>
+      <label className="flex flex-col font-medium text-foreground">
         Amount:
         <input 
           type="number" 
           step="0.01" 
           {...register('amount', { valueAsNumber: true })} 
           placeholder="Enter amount"
+          className="mt-2 p-2 rounded-md border border-primary bg-secondary text-base focus:outline-none focus:ring-2 focus:ring-primary"
         />
-        {errors.amount && <span className="error">{errors.amount.message}</span>}
+        {errors.amount && <span className="text-destructive text-sm mt-1 font-normal">{errors.amount.message}</span>}
       </label>
       
-      <button type="submit">Add Expense</button>
+      <button 
+        type="submit"
+        className="bg-primary text-accent-foreground border-none rounded-md px-6 py-3 text-base cursor-pointer mt-5 transition-colors hover:bg-primary/90"
+      >
+        Add Expense
+      </button>
     </form>
   );
 }

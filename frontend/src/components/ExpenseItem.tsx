@@ -6,17 +6,17 @@ interface ExpenseItemProps {
 
 export default function ExpenseItem({ expense }: ExpenseItemProps) {
   return (
-    <div className="expense-item">
+    <div className="bg-secondary rounded-xl shadow-md border border-primary p-6 flex flex-col gap-2 transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
       <div>
-        <strong>Date:</strong> {expense?.date ?? 'N/A'}
+        <strong className="text-foreground">Date:</strong> {expense?.date ?? 'N/A'}
       </div>
       <div>
-        <strong>Description:</strong> {expense?.description ?? 'N/A'}
+        <strong className="text-foreground">Description:</strong> {expense?.description ?? 'N/A'}
       </div>
       <div>
-        <strong>Payer:</strong> {expense?.payer ?? 'N/A'}
+        <strong className="text-foreground">Payer:</strong> {expense?.payer ?? 'N/A'}
       </div>
-      <div className="amount">
+      <div className="text-xl font-bold text-primary">
         <strong>Amount:</strong> $
         {typeof expense?.amount === 'number' && !isNaN(expense.amount)
           ? expense.amount.toFixed(2)
